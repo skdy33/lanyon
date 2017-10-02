@@ -1,5 +1,5 @@
 ---
-layout: lists
+layout: page
 title: lists
 ---
 # 모든 글에 대한 list
