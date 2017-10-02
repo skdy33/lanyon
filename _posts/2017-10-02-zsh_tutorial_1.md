@@ -82,6 +82,22 @@ sudo apt-get install zsh
 ❯ curl -L  https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 ```
 
+### z 설치
+z 는 나의 방문기록을 저장해주는 툴이다. <br>
+바탕화면 안에, 2017년 폴더 안에, 강의명 안에, 해당 숙제 폴더를 들어가기 위해 얼마나 비효율적인 프로세스를 거치는가. <br>
+이를 최적화하는 수단이 **z** 이다. <br>
+
+
+1. Download ```wget https://raw.githubusercontent.com/rupa/z/master/z.sh```
+2. Run printf ```"\n\n#initialize Z (https://github.com/rupa/z) \n. ~/z.sh \n\n" >> .zshrc.``` <br>
+ This command appends . ~/z.sh to .zshrc file, which tells it to run Z on start-up.
+3. ```source ~/.zshrc```
+
+이제 자주가는 페이지에 방문을 하고, 다시 ```~/``` 에 돌아와서 ```z somthing + tab``` 을 눌러보자. <br>
+쩐다.
+
+
+
 *벌써 설치가 끝났다!!*
 
 ## 환경설정
@@ -103,7 +119,7 @@ vi ~/.zshrc
 ZSH_THEME="random"
 ```
 필자는 오랜 끝에 ```ZSH_THEME="refined"``` 를 가장 선호하게 되었다. <br>
-참조 링크에 여러 추천 테마도 있으니 여러 개를 시도해보길 바란다. 
+참조 링크에 여러 추천 테마도 있으니 여러 개를 시도해보길 바란다.
 
 ## 참조 링크
 
