@@ -35,10 +35,77 @@ title: zsh 쉘 튜토리얼(1)
 
 그러다가 찾아낸 것이 바로 bash shell의 진화판, **zsh shell** 이다. <br>
 
+## Why zsh
 
+공식 [FAQ](http://zsh.sourceforge.net/FAQ/zshfaq01.html#l4)에서는 zsh의 장점을 많이 다루지만, 내가 zsh를 선택한 기준은 3가지로 나눌 수 있다. <br>
+* shell 중 가장 많은 기능을 담고있으며, 지금도 계속해서 개발중인 shell
+* regex가 매우 강력하여, 대충 tab 눌러도 완성되는 auto-completion.
+* 오픈소스 프로젝트 [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) 프레임워크를 통한 환경설정 관리의 간편함. <br>
 
+이 세가지 이유로, 나는 **zsh shell** 을 파겠다. <br>
 
+zsh 쉘 튜토리얼(1) 에서는, **zsh** 와 **oh-my-zsh** 설치 방법만을 다룬다. <br>
+
+## 설치 시작
+
+### 작업 환경
+```zsh  
+❯ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 16.04.2 LTS
+Release:	16.04
+Codename:	xenial
+```
+```zsh
+❯ zsh --version
+zsh 5.1.1 (x86_64-ubuntu-linux-gnu)
+```
+
+### zsh 설치
+일단 zsh 를 설치한다.
+``` zsh
+sudo apt-get install zsh
+```
+그 후, 기본 쉘을 zsh로 바꾼다.
+``` zsh
+# zsh shell 실행파일 위치 확인
+❯ which zsh
+/usr/bin/zsh
+
+# default shell을 zsh로 바꾼 후, 컴퓨터를 리부팅한다.
+❯ chsh -s /usr/bin/zsh
+```
+
+### oh-my-zsh 설치
+```zsh
+❯ curl -L  https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+```
+
+*벌써 설치가 끝났다!!*
+
+## 환경설정
+
+강력한 기능에 대한 공부나, optimization의 경우는 (2)탄부터 천천히 다루도록 하겠다. <br>
+오늘은 순전히 **간지** 를 위한, 테마 변경과 설정 약간을 바꿔주고 끝마친다. <br>
+
+### 테마 변경
+테마는 ```~/.zshrc``` 에서 변경한다. <br>
+사람들마다 좋아하는 테마 기호가 참 많이 다를 것이다. <br>
+오픈소스 프로젝트답게 별 쓸데없는 기능이 다 들어있는데, <br>
+그 중 내게 도움을 줬던건 바로 "random theme" 기능이다. <br>
+즉, 터미널을 킬 때마다 새로운 테마로 열려, 확고한 기호가 나오기 전 까지 여러가지를 경험해 볼 수 있다. <br>
+```zsh
+vi ~/.zshrc
+```
+이제 ZSH_THEME 변수의 값을 바꿔준다.
+```vim
+ZSH_THEME="random"
+```
+필자는 오랜 끝에 ```ZSH_THEME="refined"``` 를 가장 선호하게 되었다. <br>
+참조 링크에 여러 추천 테마도 있으니 여러 개를 시도해보길 바란다. 
 
 ## 참조 링크
 
 * [터미널 초보의 필수품인 oh my zsh! 를 사용하자](https://nolboo.kim/blog/2015/08/21/oh-my-zsh/) - zsh와 oh my zsh에 대한 간략한 소개와 설치법. <br>
+* [What is your favorite zsh theme](https://www.quora.com/What-is-your-favorite-oh-my-zsh-theme) - 사람들이 즐겨 사용하는 테마들을 얘기한 자리.
