@@ -34,7 +34,7 @@ cf) 현재 용도에 따라 다양한 IDE를 사용하고 있다. (모델링 - *
 
 ### 2.1 버퍼와 탭..
 atom을 예로 들자. <br>
-![아톰 에디터 그림]('https://imgur.com/BRmWhtR')
+![아톰 에디터 그림](https://imgur.com/BRmWhtR)
 
 ## 참고자료
 * [Use Vim as a python IDE](http://liuchengxu.org/posts/use-vim-as-a-python-ide/) - vim을 파이썬 에디터로 만드는 방법.
