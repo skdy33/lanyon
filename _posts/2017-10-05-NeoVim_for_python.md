@@ -32,13 +32,101 @@ cf) 현재 용도에 따라 다양한 IDE를 사용하고 있다. (모델링 - *
 
 아래를 읽고 나면 위의 기능들을 구현하기 위해 다음과 같은 내용들이 왜 필요했는가를 자연스레 알게된다. <br>
 
-### 2.1 버퍼와 탭..
+### 2.1 버퍼와 탭.. 그리고 윈도우
 atom을 예로 들자. <br>
-![아톰 에디터 그림](https://i.imgur.com/BRmWhtR.png)
+![아톰 에디터 그림](https://i.imgur.com/BRmWhtR.png) <br>
+가장 왼쪽에서 파일을 누르면, 해당 파일에 대한 **탭** 이 열려 그 탭을 수정한다. <br>
+그렇다면 vim에서 이런 상황과 마찬가지인 형태를 만들기 위해선 가장 먼저 vim 내에서의 **탭** 과 **버퍼** 를 이해해야만 한다. <br>
+
+#### 버퍼란
+
+```vim tmpfile``` 을 터미널에서 입력했다. 이를 통해 들어가는 파일은 <br>
+*vim이 열어준 **버퍼**이다. * <br>
+두 가지 관점의 해석을 제시한다. <br>
+* 버퍼 = 편집중인 텍스트.
+* vim으로 파일을 열면 vim의 버퍼로 내용이 로드된다.
+
+이렇게 우리가 보게 되는 것이 vim은 atom 에디터와는 다르게, 탭이 아니라 버퍼이다. <br>
+
+혹시 실수로 ```vim somefile otherfile``` 이런 식으로 vim을 열어본 적이 있으면, <br>
+이제는 조금 이해할 수 있다. <br>
+두 개의 버퍼가 열렸고, 이 사이는 ```:bnext```라는 커맨드로 돌아다닐 수 있다. <br>
+![example](https://joshldavis.com/img/vim/buffers.gif) <br>
+*두 개의 버퍼를 돌아다니는 예시* <br>
+
+#### 윈도우란
+
+조금만, 조금만 더 들어가보자. <br>
+버퍼라는 vim이 가진 공간에 데이터가 잔뜩 들어있다. <br>
+그럼 우리는 그 버퍼가 출력한 **전체 값**을 보고있는건데 <br>
+이 보고있는 화면을 **윈도우**라고 부른다. <br>
+
+위의 두 개의 버퍼를 돌아다니는 예시를 보자. <br>
+버퍼는 두 갠데, 윈도우는 하나니까! 우리는 하나밖에 못보는거다. <br>
+그럼 윈도우를 나누면, 버퍼에 있는 값들이 동시에 보이겠다! <br>
+```:split```을 입력해보자. <br>
+![split example](https://joshldavis.com/img/vim/windows.gif) <br>
+*윈도우를 쪼개는 예시* <br>  
+
+#### 탭이란
+
+자 이제 **탭**만 알면 된다. <br>
+[공식 문서에](http://vim.wikia.com/wiki/Using_tab_pages) 따르면
+```
+탭 : 탭은 윈도우의 집합이다.
+```
+라고 나와있다. <br>
+
+아직 애매한게 당연히 이상한게 아니다. <br>
+자, 저 위 그림에서 하나의 터미널에서 2개의 윈도우가 나오면, 그 두 개의 윈도우가 하나의 **탭** 이다. <br>
+
+그렇다면 새로운 탭을 ```:tabnew```로 만들어보자. <br>
+![multiple tabs example](https://i.imgur.com/VTDjCaX.png) <br>
+터미널 왼쪽 위를 보면, 두 개의 파일이 마치 크롬에서 여러 창이 열리듯 나온걸 볼 수 있다. <br>
+이는 ```:tabNext``` 를 통하여 tab을 바꿀 수 있다. <br>
+이렇게 각 탭마다 다른 레이아웃과, 다른 용도를 띄워 사용할 수 있다. <br>
+
+그렇다면 탭은 여러 개의 버퍼를 띄운 윈도우랑 똑같은 용도로도 사용할 수 있는데, 굳이 왜 만들었는가? <br>
+
+[stack overflow 발췌](https://stackoverflow.com/questions/26708822/why-do-vim-experts-prefer-buffers-over-tabs) <br>
+* **버퍼**를 각 파일을 추적하고 관리하는 용도로 사용한다.
+* **탭**은 working space, 즉 여러 개의 project 단위를 동시에 수정해야 할 때 사용한다.
+
+코딩 닌자를 꿈꾸는 우리들은 일단 하나의 working space에서 놀 일 밖에 없으니까, <br>
+버퍼만 잘 만지자. <br>
+
+### 2.2 CtrlP: 버퍼를 관리하기 위한 플러그인.
+이제 하나의 탭 안에서 여러 버퍼를 잘 navigating해야 할 이유를 알게 되었다. <br>
+그럼 이를 도와주는 플러그인이 CtrlP이다.
+
+#### 설치부터.
+
+설치는 [공식 홈페이지](http://ctrlpvim.github.io/ctrlp.vim/#installation)를 참고한다. <br>
+```zsh
+# vim 파일이 관리되는 곳에 일단 들어간다.
+cd ~/.local/share/nvim
+# 설치
+git clone https://github.com/ctrlpvim/ctrlp.vim.git bundle/ctrlp.vim
+```
+이제 ```init.vim```에 추가한다. <br>
+```zsh
+vi ~/.config/nvim/init.vim
+```
+vim 안에서 플러그인을 추가한다. <br>
+```vim
+set runtimepath^=~/.config/nvim/bundle/ctrlp.vim
+```
+그 vim을 끄지말고, Vim의 커맨드라인에서 다음을 돌린다. <br>
+```vim
+:helptags ~/.config/nvim/bundle/ctrlp.vim/doc
+```
+이제 껏다키면 설치 끝!
+
+#### 세팅과 사용 예
 
 ## 참고자료
 * [Use Vim as a python IDE](http://liuchengxu.org/posts/use-vim-as-a-python-ide/) - vim을 파이썬 에디터로 만드는 방법.
 * [Vim and python](https://www.fullstackpython.com/vim.html) - 파이썬과 vim의 사용에 대한 설명.
-* [python으로 만드는 neovim async plugin](https://astralhpi.github.io/pycon2016_program31/#1)
+*  [python으로 만드는 neovim async plugin](https://astralhpi.github.io/pycon2016_program31/#1)
 * [vim의 탭은 그렇게 쓰는 것이 아니다](https://bakyeono.net/post/2015-08-13-vim-tab-madness-translate.html) - CtrlP와 버퍼의 의미
 * [vim 설정파일 알아보기](http://jaeheeship.github.io/console/2013/11/15/vimrc-configuration.html) - vimrc의 언어를 이해하기 위해 필요한 기초지식
