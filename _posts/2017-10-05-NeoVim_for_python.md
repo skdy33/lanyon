@@ -124,9 +124,99 @@ set runtimepath^=~/.config/nvim/bundle/ctrlp.vim
 
 #### 세팅과 사용 예
 
+대충 머리속엔 그림이 있다. <br>
+
+1. 여러 개의 파이썬 파일을 버퍼에 넣고, <br>
+2. 필요하면 vim 내에서 추가적으로 더 열 수도, 닫을 수도 있고, <br>
+3. 내가 수정하거나 참고할 기능들을 손 쉽게 파일 내에서 찾을 수 있어야 한다. <br>
+
+일단 CtrlP로 이런 것들이 가능한지, 맛을 보자.
+
+##### CtrlP 켜기
+일단 작업 폴더 안에서 ```:CtrlP [해당 프로젝트 폴더 location]을 ``` 쳐보자.
+![ctrlp 이미지](https://i.imgur.com/0Fgg0wL.png) <br>
+진짜 엄청나다. 내가 해당한 폴더에서 검색이 실시간으로 버퍼링없이 가능하다. <br>
+엔터치면 열린다. <br>
+
+또 하나, 작업 폴더 안에서 ```:CtrlP ~/```를 쳐보자. <br>
+와... 어떤 파일이든 손쉽게 찾고, 열 수 있다. <br>
+조금만 손에 익으면 위의 1,2,3을 모두 **ctrlp** 만으로 관리할 수 있을 것 같다. <br>
+이래서 vim을 짱이라고 하는 것 같다.. <br>
+
+##### 추가 설정
+
+이제 단축키를 만들고, 사용해보자.
+
+vim configuration 파일에 대한 구체적인 공부는 추후에 다루자 할게 너무 많다.. <br>
+오늘은 단축키 지정에 있어 필요한 부분만! 짚으면서 넘어가자. <br>
+
+neovim 환경설정 파일 위치 : ```~/.config/nvim/init.vim``` <br>
+이 안에서 작업한다.
+
+
+##### Leader
+vim에는 **leader** 키가 존재한다. <br>
+이 키는 예를들어서 "CtrlP기능을 켜주세요" 라는 커맨드를 ```<leader>p``` 이런 식으로 바꿀 수 있다. <br>
+만약 리더 키가 **\\** 이라면 ```\p``` 만 누르면 해당 플러그인이 켜지는 것이다! <br>
+
+먼저, 기본 leader 키는 백슬래시(\\) 인데, 백슬래시는 너무 접근성이 애매한 위치에 있으므로 손이 잘 가는 위치로 바꿔야 한다. <br>
+나는 **스페이스바** 로 바꿀 것이다. <br>
+
+nvim 파일 안에<br>
+```vim
+let mapleader=" "
+```
+을 넣는다. 그러면 끝!
+
+##### 좋은거 하나 줄게.
+```vim
+map <leader>s :source ~/.config/nvim/init.vim<CR>
+```
+이거 nvim 파일에 넣어보자. <br>
+
+우리가 vim 설정파일을 수정 할 때마다 자꾸 터미널을 껐다가 켜거나, vim을 껐다가 켜야 하는데, <br>
+그게 귀찮으니까 ```스페이스바 + s``` 하면 바로 재시작하게 해주는 코드이다. <br>
+명령어 단위 해석은 나중에~~
+
+##### 이걸 nvim 파일에 복붙하자
+```
+" 기본 무시 설정
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+" 가장 가까운 .git 디렉토리를 cwd(현재 작업 디렉토리)로 사용
+" 버전 관리를 사용하는 프로젝트를 할 때 꽤 적절하다.
+" .svn, .hg, .bzr도 지원한다.
+let g:ctrlp_working_path_mode = 'r'
+
+" 단축키를 리더 키로 대체
+nmap <leader>p :CtrlP<cr>
+
+" 여러 모드를 위한 단축키
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
+```
+자, 이제 CtrlP의 세팅은 끝이다. <br>
+**MRU**란, *most recent used* 의 약자로, 최근 사용한 파일을 기준으로 찾는다. <br>
+**CtrlBuffer** 는 현재 버퍼에 열려있는 파일들 중에서 찾는 것이고, <br>
+**CtrlPMixed** 는 MRU + Buffer + CtrlP, 즉 모든 걸 다 합친 것이다. <br>
+
+이제 하나의 윈도우 안에서 버퍼를 열고 닫는 방법은 어느정도로 깨달았다!!! <br>
+
+더 많은 기능들은 필요할 때마다 찾아가면서 하자 <br>
+
+###### 앞으로의 guide.
+어떠한 버퍼가 열려있는가, 그리고 어떻게 돌아다니는가는 **buffergator** 이라는 것이 있다. <br>
+이를 소개하고, 이제 파이썬의 auto-completion, docstring 확인 등의 기능을 추가한다. <br>
+오늘은 여기서 끝!!!
+
 ## 참고자료
 * [Use Vim as a python IDE](http://liuchengxu.org/posts/use-vim-as-a-python-ide/) - vim을 파이썬 에디터로 만드는 방법.
 * [Vim and python](https://www.fullstackpython.com/vim.html) - 파이썬과 vim의 사용에 대한 설명.
 *  [python으로 만드는 neovim async plugin](https://astralhpi.github.io/pycon2016_program31/#1)
-* [vim의 탭은 그렇게 쓰는 것이 아니다](https://bakyeono.net/post/2015-08-13-vim-tab-madness-translate.html) - CtrlP와 버퍼의 의미
+  * [vim의 탭은 그렇게 쓰는 것이 아니다](https://bakyeono.net/post/2015-08-13-vim-tab-madness-translate.html) - CtrlP와 버퍼의 의미
 * [vim 설정파일 알아보기](http://jaeheeship.github.io/console/2013/11/15/vimrc-configuration.html) - vimrc의 언어를 이해하기 위해 필요한 기초지식
+* [Vim Configuration From Scratch in 2016 ](http://marcgg.com/blog/2016/03/01/vimrc-example/) - vim 단축키 배열 참고자료
