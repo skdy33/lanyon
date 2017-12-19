@@ -19,4 +19,20 @@ title: summarzation article 1
   - Finally, scientific papers follow a **natual discourse**.
 * There are currently two types of approaches towards scientific summarization.
   - articles' abstracts, citation based summaries.
-* The **problem of inconsistency** between 
+* The **problem of inconsistency** between the degree of certainty of expressing findings between the citing article and referenced article has been also reported.
+* We call the **textual spans** in the reference articles that reflect the citation, the citation-context.
+* We extract citation-context in the refernce article for each citation.
+
+## The summarization approach
+* Our scientific summary geneartion algorithm is composed of four steps
+  - Extracting citation-context
+  - Grouping citation-contexts
+  - Ranking the sentences within each group
+  - Selecting the sentences for final summary
+- We assume that the citation text in each citing article is already known.
+- We tokenized the articles' text to sentences by using the punkt unsupervised sentence boundary detection algorithm
+
+### 3.1 Extracting the citation-context
+* **To find citation-contexts, we consider each citation as an n-gram vector and use vector space model for locating the relevant text spans in the reference article.**
+* The similarity function is the **cosine similarity** between the pivoted normalized vectors.
+* We used Metamap for extracting biomedical concepts from the citation text
