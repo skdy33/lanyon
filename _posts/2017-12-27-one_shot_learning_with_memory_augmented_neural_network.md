@@ -28,11 +28,12 @@ ory  demands
   - For meta learning, we choose parameters to reduce the expected learning cost across a distribution of datasets p(D)
 * Importantly, labels are shuffled from datset-to-dataset.
   * This prevents the network from slowly learning sample-class bindings in its weights.
-* Ultimately, the system aims at modelling the predictive distribution $p(y_t | x_t, D_{1:t-1};\theta)$, inducing a corresponding loss at each time step.
+* Ultimately, the system aims at modelling the predictive distribution $p(y_t \| x_t, D_{1:t-1};\theta)$, inducing a corresponding loss at each time step.
 
 ### notation
 * $p(D)$ : datasets
 * $D = {d_t}^T_{t=1} = \{(x_t,y_t)\}^T_{t=1}$ : some datasets
+* <a href="https://www.codecogs.com/eqnedit.php?latex=D&space;=&space;{d_t}^T_{t=1}&space;=&space;\{(x_t,y_t)\}^T_{t=1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?D&space;=&space;{d_t}^T_{t=1}&space;=&space;\{(x_t,y_t)\}^T_{t=1}" title="D = {d_t}^T_{t=1} = \{(x_t,y_t)\}^T_{t=1}" /></a>
 * $y_t$ : For classification, class label for an image $x_t$. for regression, $y_t$ is the value of a hidden function for a vector with real-valued elements $x_t$
 
 
