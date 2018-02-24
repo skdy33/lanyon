@@ -114,11 +114,11 @@ vi ~/.config/nvim/init.vim
 ```
 vim 안에서 플러그인을 추가한다. <br>
 ```vim
-set runtimepath^=~/.config/nvim/bundle/ctrlp.vim
+set runtimepath^=~/.local/share/nvim/bundle/ctrlp.vim
 ```
 그 vim을 끄지말고, Vim의 커맨드라인에서 다음을 돌린다. <br>
 ```vim
-:helptags ~/.config/nvim/bundle/ctrlp.vim/doc
+:helptags ~/.local/share/nvim/bundle/ctrlp.vim/doc
 ```
 이제 껏다키면 설치 끝!
 
