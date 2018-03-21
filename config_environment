@@ -1,0 +1,4 @@
+## github config.
+* ```git config --global core.editor "vim" ```
+* ```git config --global user.name "skdy33"
+* ```git config --global user.password "비번"
