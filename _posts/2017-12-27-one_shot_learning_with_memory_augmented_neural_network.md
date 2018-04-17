@@ -36,6 +36,8 @@ ory  demands
 * <a href="https://www.codecogs.com/eqnedit.php?latex=D&space;=&space;{d_t}^T_{t=1}&space;=&space;\{(x_t,y_t)\}^T_{t=1}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?D&space;=&space;{d_t}^T_{t=1}&space;=&space;\{(x_t,y_t)\}^T_{t=1}" title="D = {d_t}^T_{t=1} = \{(x_t,y_t)\}^T_{t=1}" /></a>
 * $y_t$ : For classification, class label for an image $x_t$. for regression, $y_t$ is the value of a hidden function for a vector with real-valued elements $x_t$
 
+## 3. Memory-Augmented model
+### 3.1 [Neural Turing Machines](https://arxiv.org/abs/1410.5401)
 
 
 ## 비고
@@ -49,3 +51,5 @@ ory  demands
 * 각 notation에 대한 설명
 * Importantly, labels are shuffled from datset-to-dataset.
   - 이런 문장의 경우에는 전체가 보여야 할 것 같다
+- [여기에서 수식 html로 변환하면 github 인식 가능](https://www.codecogs.com/latex/eqneditor.php)
+* 나는 이걸 읽으면서 extra 논문 혹은 자료들을 많이 읽는데, 어떻게 이을 수 있지? remind에는 그게 필요할 것 같다.
