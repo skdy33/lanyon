@@ -89,6 +89,7 @@ from django.db.models.signals import post_save
 			        Token.objects.create(user=instance)
 ```
 * apps.py <br>
+
 ```python
 from django.apps import AppConfig
 
@@ -98,12 +99,15 @@ class FileapiConfig(AppConfig):
     def ready(self):
         import fileapi.signals
 ```
+
 * app 의 init <br>
+
 ```python
 default_app_config = 'fileapi.apps.FileapiConfig'
 ```
 
-* url
+* url <br>
+
 ```python
 router.register(r'users',views.UserViewSet,base_name='user')
 url(r'^api-token-auth/', auth_view.obtain_auth_token)
