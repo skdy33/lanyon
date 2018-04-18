@@ -88,7 +88,7 @@ from django.db.models.signals import post_save
 		    if created:
 			        Token.objects.create(user=instance)
 ```
-* apps.py
+* apps.py <br>
 ```python
 from django.apps import AppConfig
 
@@ -98,7 +98,7 @@ class FileapiConfig(AppConfig):
     def ready(self):
         import fileapi.signals
 ```
-* app 의 init
+* app 의 init <br>
 ```python
 default_app_config = 'fileapi.apps.FileapiConfig'
 ```
