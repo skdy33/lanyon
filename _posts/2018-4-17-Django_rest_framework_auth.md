@@ -32,7 +32,8 @@ title: authentication and permission of django rest framework
 		uwsgi_pass_request_headers on;
 		```
 * views : <br>
-```
+
+```python
 class UserViewSet(viewsets.ModelViewSet):
     """
     A viewset for viewing and editing user instances.
@@ -52,7 +53,8 @@ class UserViewSet(viewsets.ModelViewSet):
 ```
 
 * serializers <br>
-```
+
+```python
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,
@@ -75,7 +77,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 * signal <br>
 **ps) 기존에 있는 User들은 token을 다 알아서 추가해버림.** <br>
-```
+```python
 from django.db.models.signals import post_save
 		from django.dispatch import receiver
 			  from django.conf import settings
@@ -87,7 +89,7 @@ from django.db.models.signals import post_save
 			        Token.objects.create(user=instance)
 ```
 * apps.py
-```
+```python
 from django.apps import AppConfig
 
 
@@ -97,12 +99,12 @@ class FileapiConfig(AppConfig):
         import fileapi.signals
 ```
 * app 의 init
-```
+```python
 default_app_config = 'fileapi.apps.FileapiConfig'
 ```
 
 * url
-```
+```python
 router.register(r'users',views.UserViewSet,base_name='user')
 url(r'^api-token-auth/', auth_view.obtain_auth_token)
 ```
@@ -112,7 +114,7 @@ url(r'^api-token-auth/', auth_view.obtain_auth_token)
 ## 2. 모델 약간 변환
 
 ### 2.1 Song에 User 모델 넣기
-```
+```python
 fingerings = models.ForeignKey(settings.AUTH_USER_MODEL,blank=False, null=False,default=PK_OF_SUPERUSER)
 ``` 
 해당 문장 추가. <br>
