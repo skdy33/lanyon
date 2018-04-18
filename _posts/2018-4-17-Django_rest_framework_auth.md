@@ -115,6 +115,16 @@ fingerings = models.ForeignKey(settings.AUTH_USER_MODEL,blank=False, null=False,
 ``` 
 해당 문장 추가. <br>
 * 근데 문제는 여기서 추가를 할 때 model을 한번 다 지우고 다시 깔아야한다.... 
+
+## Debugging
+1. 'user-detail' not defined. <br>
+이 부분은 [hyperlinkedmodelserializer](http://www.django-rest-framework.org/api-guide/serializers/#hyperlinkedmodelserializer)를 사용해서 나온 버그이다. <br>
+```Songserializer``` 에서 foreignkey는 해당 모델의 ```-detail``` 을 view-name을 통해 serializing 해야한다. <br>
+여기서 핵심은 ```HyperlinkedrelatedField```가 lookup_field로 참고할 수 있는 형태의 viewset을 만들어줘야 한다는 것이다. <br>
+즉, viewset의 ```filter_fields```를 설정하고, 이를 serializer의 lookup_field로 지정해줘야 하는 것인데, <br>
+이 두개를 맞추지를 않았다... <br>
+이제 완벽하게 이해했고, 완벽하게 셋업하였다.<br>
+
 ## 참고자료
 * [django rest framework auth and permission](http://polyglot.ninja/django-rest-framework-authentication-permissions/)
 * [Token-based authentication with Django and React](http://geezhawk.github.io/user-authentication-with-react-and-django-rest-framework)
