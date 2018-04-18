@@ -31,7 +31,7 @@ title: authentication and permission of django rest framework
 		uwsgi_pass_header Authorization;
 		uwsgi_pass_request_headers on;
 		```
-* views :
+* views : <br>
 ```
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -50,7 +50,8 @@ class UserViewSet(viewsets.ModelViewSet):
     	return [permission() for permission in permission_classes]
 
 ```
-* serializers
+
+* serializers <br>
 ```
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -71,8 +72,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'password')
 ```
-* signal
-**ps) 기존에 있는 User들은 token을 다 알아서 추가해버림.**
+
+* signal <br>
+**ps) 기존에 있는 User들은 token을 다 알아서 추가해버림.** <br>
 ```
 from django.db.models.signals import post_save
 		from django.dispatch import receiver
