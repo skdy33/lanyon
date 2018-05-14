@@ -65,9 +65,37 @@ YCM(You complete me, [jedi](https://github.com/davidhalter/jedi) based)이라는
 ### 3.2 Install YCM with vundle
 아... plugin을 **vundle** 로 설치했던 적	
 
+### mappiness에 해보자.
+1. local share nvim bundle에 vundle 설치
+	* ```git clone https://github.com/VundleVim/Vundle.vim.git```
+2. `init.vim` 에 추가
+```
+set nocompatible
+filetype off
+
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+call vundle#begin('~/.config/nvim/bundle')
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+
+call vundle#end()
+```
+3. 이제 :PluninInstall하고
+4. `sudo apt-get install cmake`
+5. `mkdir ~/ycm_build | cd ~/ycm_build`
+6. `cmake -G "Unix Makefiles" . ~/.local/share/nvim/bundle/YouCompleteMe/third_party/ycmd/cpp`
+7. `cmake --build . --target ycm_core --config Release`
+8. 
+```bash
+cd ~/.config/nvim/bundle/YouCompleteMe
+./install.py --clang-completer
+```
+9. `install.sh`
 ## 참고자료
 * [Resize splits more quickly](http://vim.wikia.com/wiki/Resize_splits_more_quickly)
 * [You Complete Me](https://github.com/Valloric/YouCompleteMe)
+* [neovim에 ycm 설치](http://milennium9.godohosting.com/wordpress/?p=205)
 
 autocomplete - YCM. 민상이한테 깔아둠
 

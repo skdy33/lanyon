@@ -154,3 +154,4 @@ c.JupyterHub.ssl_key = '/복사한/위치/privkey.pem'
 ## 참고자료
 * [jupyterhub 환경 구축](https://ansuchan.com/gettings-started-with-jupyterhub/)
 * [HTTPS와 SSL 인증서](https://opentutorials.org/course/228/4894)
+* [letsencrypt 설치](https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx)

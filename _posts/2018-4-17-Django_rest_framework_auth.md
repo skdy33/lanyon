@@ -22,6 +22,7 @@ title: authentication and permission of django rest framework
 	```
 	'DEFAULT_AUTHENTICATION_CLASSES': (
 	   'rest_framework.authentication.TokenAuthentication',
+		'rest_framework.authentication.SessionAuthentication',
 	   )
 	```
 	추가
@@ -53,7 +54,7 @@ class UserViewSet(viewsets.ModelViewSet):
 ```
 
 * serializers <br>
-
+	* Modelserializer의 의미는 model을 위한 validator를 자동으로 만들어주는데 있다.
 ```python
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -75,18 +76,19 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password')
 ```
 
-* signal <br>
+* signals.py <br>
 **ps) 기존에 있는 User들은 token을 다 알아서 추가해버림.** <br>
 ```python
 from django.db.models.signals import post_save
-		from django.dispatch import receiver
-			  from django.conf import settings
-				 from rest_framework.authtoken.models import Token
+from django.dispatch import receiver
+from django.conf import settings
+from rest_framework.authtoken.models import Token
 
-					@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-	def create_auth_token(a, instance=None, created=False, **kwargs):
-		    if created:
-			        Token.objects.create(user=instance)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(a, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
 ```
 * apps.py <br>
 
@@ -124,6 +126,9 @@ fingerings = models.ForeignKey(settings.AUTH_USER_MODEL,blank=False, null=False,
 해당 문장 추가. <br>
 * 근데 문제는 여기서 추가를 할 때 model을 한번 다 지우고 다시 깔아야한다.... 
 
+## 3. Token...
+* 반드시 https로만 serving을 해야한다는데... 그 이유는?
+
 ## Debugging
 1. 'user-detail' not defined. <br>
 이 부분은 [hyperlinkedmodelserializer](http://www.django-rest-framework.org/api-guide/serializers/#hyperlinkedmodelserializer)를 사용해서 나온 버그이다. <br>
@@ -132,7 +137,27 @@ fingerings = models.ForeignKey(settings.AUTH_USER_MODEL,blank=False, null=False,
 즉, viewset의 ```filter_fields```를 설정하고, 이를 serializer의 lookup_field로 지정해줘야 하는 것인데, <br>
 이 두개를 맞추지를 않았다... <br>
 이제 완벽하게 이해했고, 완벽하게 셋업하였다.<br>
+2. 현재 csrf token이 안된다고 나오더니, service에서 로그인자체가 먹히지를 않는다. 도대체 왜그런거야??
 
+## APITestCase
+* 이걸 반드시 익혀야 한다.
+
+## QnA
+* view 쪽에서 post_save 하는 것과, serializer에서 create하는 것의 차이는?
+	* 사실 post_save는 signal이다.
+	* 그렇다면 models 의 publish는? 
+		* 이건 그냥 내가 낭비하는 코드같아.
+	* 자 그러면 [save vs create](https://stackoverflow.com/questions/23926385/difference-between-objects-create-and-object-save-in-django-orm)
+		* 이건 basically same. 근데 serializer에서는 어떻게 create를 하는거지?
+	* view 의 perform_update와 serializer의 update, 그리고 model의 save가 어떤 관계인지 잘 모르겠다.
+		1. 일단 serializer가 들어온 데이터에 대해서 validate한 지 평가한다.
+		2. validate한 지 평가하고 viewset의 perform_create()를 돌린다.
+		3. 이게 다시 serializer의 save() 메쏘드를 돌린다.
+		4. 그러면 여기서 연결된 serializer의 create() 혹은 update()를 돌린다.
+		5. 그러면 serializer.instance의 것이  save, update를 돌린다.
+		6. viewset이 response로 serializer.data를 내놓는다.
+			* 여기서 serializer.data는 serializer의 to_representation()으로 dict 형태로 바뀐 것.
+		* 결국 핵심은 모델의 save를 안간다는 것.
 ## 참고자료
 * [django rest framework auth and permission](http://polyglot.ninja/django-rest-framework-authentication-permissions/)
 * [Token-based authentication with Django and React](http://geezhawk.github.io/user-authentication-with-react-and-django-rest-framework)
